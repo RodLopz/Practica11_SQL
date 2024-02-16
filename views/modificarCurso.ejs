@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>/* Estilos para el formulario de Modificar Curso */
+
+        /* Estilos para el encabezado */
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Estilos para el formulario */
+        form {
+            margin: 20px auto;
+            width: 80%;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        form input[type="date"],
+        form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        form button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modificar Curso</h1>
+    <form id="modificar-curso-form" action="/modificar/<%= curso.id %>" method="POST">
+        <label for="fecha_importacion">Fecha:</label>
+        <input type="date" id="fecha_importacion" name="fecha_importacion" value="<%= curso.fecha_importacion.toISOString().slice(0,10) %>" required>
+        <label for="nivel">Nivel:</label>
+        <input type="text" id="nivel" name="nivel" value="<%= curso.nivel %>" required><br>
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" value="<%= curso.descripcion %>"><br>
+        <label for="lugar">Lugar:</label>
+        <input type="text" id="lugar" name="lugar" value="<%= curso.lugar %>" required>
+        <label for="nombre">Nombre del curso:</label>
+        <input type="text" id="nombre" name="nombre" value="<%= curso.nombre %>" required><br>
+        <button type="submit">Actualizar</button>
+    </form>
+    <a href="/">Volver al Inicio</a>
+    <a href="/modificar">Volver atras</a>
+    <footer>
+        <p>&copy; 2024 Practica 11</p>
+    </footer>
+</body>
+</html>

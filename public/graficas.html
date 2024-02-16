@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas</title>
+    <!-- Agrega la biblioteca Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>/* Estilos para la página de Gráficas */
+
+        /* Estilos para el encabezado */
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Estilos para el contenedor del gráfico */
+        #grafico {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
+        }
+        </style>
+</head>
+<body>
+    <h1>Gráficas de Ratio de Alumnos Aprobados por Curso</h1>
+
+    <!-- Contenedor para el gráfico -->
+    <canvas id="grafico"></canvas>
+
+    <script>
+        // Función para obtener los datos y generar el gráfico
+        async function obtenerDatosYGenerarGrafico() {
+            try {
+                // Realizar una solicitud GET al servidor para obtener los datos necesarios
+                const response = await fetch('/graficas');
+                const data = await response.json();
+
+                // Obtener los datos necesarios para el gráfico
+                const nombresCursos = data.map(curso => curso.nombreCurso);
+                const alumnosAprobados = data.map(curso => curso.alumnosAprobados);
+                const totalMatriculados = data.map(curso => curso.totalMatriculados);
+
+                // Crear el gráfico utilizando Chart.js
+                const ctx = document.getElementById('grafico').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: nombresCursos,
+                        datasets: [{
+                            label: 'Alumnos Aprobados',
+                            data: alumnosAprobados,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total Matriculados',
+                            data: totalMatriculados,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error al obtener datos y generar el gráfico:', error);
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        obtenerDatosYGenerarGrafico();
+    </script>
+    <a href="/">Volver al Inicio</a>
+</body>
+<footer>
+    <p>&copy; 2024 Practica 11</p>
+</footer>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos Matriculados</title>
+    <style>/* Estilos para la página de Alumnos Matriculados */
+
+        /* Estilos para el encabezado */
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Estilos para el formulario de búsqueda */
+        #buscarForm {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        #buscarForm label {
+            margin-right: 10px;
+        }
+        
+        #buscarForm input[type="text"] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+        
+        #buscarForm button {
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        #buscarForm button:hover {
+            background-color: #555;
+        }
+        
+        /* Estilos para el contenedor de resultados */
+        #resultados {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        </style>
+</head>
+
+<body>
+    <h1>Alumnos Matriculados</h1>
+
+    <!-- Formulario para buscar por ID del curso -->
+    <form id="buscarForm">
+        <label for="idCurso">ID del Curso:</label>
+        <input type="text" id="idCurso" name="idCurso">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <!-- Contenedor para mostrar los resultados de la búsqueda -->
+    <div id="resultados"></div>
+
+    <script>
+        // Función para manejar el envío del formulario de búsqueda
+        document.getElementById('buscarForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+            // Obtener el ID del curso ingresado por el usuario
+            const idCurso = document.getElementById('idCurso').value;
+
+            // Realizar una solicitud GET al servidor para obtener los alumnos matriculados en el curso
+            fetch(`/matriculados/${idCurso}`)
+            .then(response => response.text())
+            .then(data => {
+                // Mostrar los resultados en el contenedor de resultados
+                document.getElementById('resultados').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+
+        function eliminarAlumno(idCurso, nombreAlumno) {
+    // Confirmar con el usuario si realmente desea eliminar al alumno
+    if (confirm(`¿Estás seguro de eliminar al alumno ${nombreAlumno}?`)) {
+        // Si el usuario confirma, enviar una solicitud DELETE al servidor para eliminar al alumno
+        fetch(`/eliminar-alumno/${idCurso}/${nombreAlumno}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Si la eliminación es exitosa, recargar la página para reflejar los cambios
+                location.reload();
+            } else {
+                // Si hay un error al eliminar al alumno, mostrar un mensaje de error
+                alert('Error al eliminar al alumno. Por favor, inténtalo de nuevo más tarde.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Si hay un error en la solicitud, mostrar un mensaje de error
+            alert('Error al eliminar al alumno. Por favor, inténtalo de nuevo más tarde.');
+        });
+    }
+}
+    </script>
+    <a href="/">Volver al Inicio</a>
+</body>
+<footer>
+    <p>&copy; 2024 Practica 11</p>
+</footer>
+
+</html>

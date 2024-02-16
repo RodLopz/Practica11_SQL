@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Curso</title>
+    <style>
+        /* Estilos para la página de Modificar Curso */
+        /* Estilos para el encabezado */
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Estilos para la lista de enlaces */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 80%;
+        }
+        
+        ul li {
+            margin-bottom: 10px;
+        }
+        
+        ul li a {
+            display: block;
+            padding: 10px;
+            background-color: #f4f4f4;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px;
+        }
+        
+        ul li a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modificar Curso</h1>
+
+    <label for="numero_curso">Selecciona el número del curso (1-10): </label>
+    <input type="number" id="numero_curso" min="1" max="10">
+    <button onclick="redirigir()">Ir</button>
+
+    <ul id="lista_cursos">
+        <!-- Los enlaces se generarán dinámicamente con JavaScript -->
+    </ul>
+
+    <a href="/">Volver al Inicio</a>
+
+    <script>
+        function redirigir() {
+            var numeroCurso = document.getElementById("numero_curso").value;
+            if (numeroCurso >= 1 && numeroCurso <= 10) {
+                window.location.href = "/modificar/" + numeroCurso;
+            } else {
+                alert("Por favor, ingresa un número válido del 1 al 10.");
+            }
+        }
+
+        // Generar la lista de enlaces
+        var listaCursos = document.getElementById("lista_cursos");
+        for (var i = 1; i <= 10; i++) {
+            var listItem = document.createElement("li");
+            var link = document.createElement("a");
+            link.href = "/modificar/" + i;
+            link.textContent = "Modificar Curso " + i;
+            listItem.appendChild(link);
+            listaCursos.appendChild(listItem);
+        }
+    </script>
+</body>
+<footer>
+    <p>&copy; 2024 Practica 11/p>
+</footer>
+</html>
