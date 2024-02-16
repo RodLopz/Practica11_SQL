@@ -210,7 +210,7 @@ app.post('/modificar/:id_curso', (req, res) => {
                         res.status(500).send('Error al actualizar el curso.');
                         return;
                     } // Corregir el nombre de la variable de error
-       res.redirect(`/modificar/${id_curso}`);
+       res.redirect(`/cursos`);
     });
    
 });
